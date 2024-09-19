@@ -1,0 +1,35 @@
+{
+  "cesVersion": "2.11.24",
+  "projectName": "AiSwingPlaneTrackerStarter",
+  "packages": [
+    {
+      "name": "react-navigation",
+      "type": "navigation",
+      "options": {
+        "type": "stack"
+      }
+    },
+    {
+      "name": "stylesheet",
+      "type": "styling"
+    }
+  ],
+  "flags": {
+    "noGit": false,
+    "noInstall": false,
+    "overwrite": false,
+    "importAlias": true,
+    "packageManager": "npm",
+    "eas": false
+  },
+  "packageManager": {
+    "type": "npm",
+    "version": "10.2.4"
+  },
+  "os": {
+    "type": "Darwin",
+    "platform": "darwin",
+    "arch": "arm64",
+    "kernelVersion": "23.3.0"
+  }
+}
