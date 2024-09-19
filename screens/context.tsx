@@ -18,7 +18,6 @@ type Context = {
   setVideoFile: React.Dispatch<React.SetStateAction<string>>;
 };
 
-// Just find-replace "XContext" with whatever context name you like. (ie. DankContext)
 const XContext = createContext<Context | null>(null);
 
 export const XContextProvider = ({ children }: Props) => {

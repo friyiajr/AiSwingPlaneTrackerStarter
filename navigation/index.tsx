@@ -6,7 +6,7 @@ import Overview from '../screens/overview';
 
 export type RootStackParamList = {
   Overview: undefined;
-  Details: { name: string };
+  Details: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
