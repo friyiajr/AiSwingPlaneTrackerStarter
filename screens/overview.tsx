@@ -5,6 +5,8 @@ import { StyleSheet, View, Text, ActivityIndicator } from 'react-native';
 
 import { Button } from '../components/Button';
 import { RootStackParamList } from '../navigation';
+import { useXContext } from './context';
+import * as ImagePicker from 'expo-image-picker';
 
 type OverviewScreenNavigationProps = StackNavigationProp<RootStackParamList, 'Overview'>;
 
@@ -12,8 +14,22 @@ export default function Overview() {
   const navigation = useNavigation<OverviewScreenNavigationProps>();
   const [isLoading, setIsLoading] = useState(false);
 
-  const startProcessing = () => {
-    navigation.navigate('Details');
+  const { setVideoFile } = useXContext();
+
+  const startProcessing = async () => {
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Videos,
+      allowsEditing: false,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      const videoPath = result.assets![0].uri!;
+      setVideoFile(videoPath);
+      setIsLoading(true);
+      navigation.navigate('Details');
+    }
   };
 
   return (
