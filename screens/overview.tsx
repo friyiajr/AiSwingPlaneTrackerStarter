@@ -1,12 +1,13 @@
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { StyleSheet, View, Text, ActivityIndicator } from 'react-native';
 
 import { Button } from '../components/Button';
 import { RootStackParamList } from '../navigation';
 import { useXContext } from './context';
 import * as ImagePicker from 'expo-image-picker';
+import { initializeAI } from 'modules/coodinate-tracker';
 
 type OverviewScreenNavigationProps = StackNavigationProp<RootStackParamList, 'Overview'>;
 
@@ -15,6 +16,10 @@ export default function Overview() {
   const [isLoading, setIsLoading] = useState(false);
 
   const { setVideoFile } = useXContext();
+
+  useEffect(() => {
+    initializeAI();
+  }, []);
 
   const startProcessing = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
