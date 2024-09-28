@@ -8,5 +8,9 @@ public class CoodinateTrackerModule: Module {
     AsyncFunction("initializeAI") {
       coordinateTracker.initializeAI()
     }
+    
+    AsyncFunction("getCoordinates") { (videoURL: String) in
+      return await coordinateTracker.getCoordinates(videoURL: videoURL)
+    }
   }
 }

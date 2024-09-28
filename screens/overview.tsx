@@ -7,7 +7,7 @@ import { Button } from '../components/Button';
 import { RootStackParamList } from '../navigation';
 import { useXContext } from './context';
 import * as ImagePicker from 'expo-image-picker';
-import { initializeAI } from 'modules/coodinate-tracker';
+import { getCoordinates, initializeAI } from 'modules/coodinate-tracker';
 
 type OverviewScreenNavigationProps = StackNavigationProp<RootStackParamList, 'Overview'>;
 
@@ -15,7 +15,7 @@ export default function Overview() {
   const navigation = useNavigation<OverviewScreenNavigationProps>();
   const [isLoading, setIsLoading] = useState(false);
 
-  const { setVideoFile } = useXContext();
+  const { setVideoFile, setObservations } = useXContext();
 
   useEffect(() => {
     initializeAI();
@@ -33,6 +33,13 @@ export default function Overview() {
       const videoPath = result.assets![0].uri!;
       setVideoFile(videoPath);
       setIsLoading(true);
+      const observations = await getCoordinates(videoPath);
+      const clubheadObservations = observations.filter((o) => {
+        return o.class !== '0' && o.confidence > 0.6;
+      });
+      setObservations(clubheadObservations);
+      console.log('clubheadObservations', clubheadObservations);
+      setIsLoading(false);
       navigation.navigate('Details');
     }
   };

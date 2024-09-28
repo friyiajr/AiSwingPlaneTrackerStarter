@@ -1,4 +1,5 @@
 // import { Observation } from 'modules/ai-coordinate-tracker';
+import { Observation } from 'modules/coodinate-tracker';
 import React, {
   createContext,
   useContext,
@@ -12,8 +13,8 @@ type Props = {
   children: React.ReactNode;
 };
 type Context = {
-  // observations: Observation[];
-  // setObservations: Dispatch<SetStateAction<Observation[]>>;
+  observations: Observation[];
+  setObservations: Dispatch<SetStateAction<Observation[]>>;
   videoFile: string;
   setVideoFile: React.Dispatch<React.SetStateAction<string>>;
 };
@@ -21,12 +22,12 @@ type Context = {
 const XContext = createContext<Context | null>(null);
 
 export const XContextProvider = ({ children }: Props) => {
-  // const [observations, setObservations] = useState<Observation[]>([]);
+  const [observations, setObservations] = useState<Observation[]>([]);
   const [videoFile, setVideoFile] = useState<string>('');
 
   const values = useMemo(() => {
-    return { videoFile, setVideoFile };
-  }, [videoFile, setVideoFile]);
+    return { videoFile, setVideoFile, observations, setObservations };
+  }, [videoFile, setVideoFile, observations, setObservations]);
 
   return <XContext.Provider value={values}>{children}</XContext.Provider>;
 };

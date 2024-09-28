@@ -3,6 +3,7 @@ import { useXContext } from './context';
 
 import {
   Canvas,
+  Circle,
   fitbox,
   Image,
   LinearGradient,
@@ -18,44 +19,47 @@ import { useEffect } from 'react';
 const { width, height } = Dimensions.get('screen');
 
 export default function Details() {
-  const { videoFile } = useXContext();
+  const { videoFile, observations } = useXContext();
 
-  const paused = useSharedValue(true);
-  const seek = useSharedValue(1);
-  const looping = useSharedValue(false);
-  const volume = useSharedValue(0);
+  // const paused = useSharedValue(true);
+  // const seek = useSharedValue(1);
+  // const looping = useSharedValue(false);
+  // const volume = useSharedValue(0);
 
-  const { currentFrame, rotation, size, currentTime } = useVideo(videoFile, {
-    paused,
-    seek,
-    looping,
-    volume,
-  });
+  // const { currentFrame, rotation, size, currentTime } = useVideo(videoFile, {
+  //   paused,
+  //   seek,
+  //   looping,
+  //   volume,
+  // });
 
-  useEffect(() => {
-    paused.value = false;
-    setTimeout(() => {
-      paused.value = true;
-    }, 250);
-  }, []);
+  // useEffect(() => {
+  //   paused.value = false;
+  //   setTimeout(() => {
+  //     paused.value = true;
+  //   }, 250);
+  // }, []);
 
-  const onRestartPressed = () => {
-    paused.value = true;
-    seek.value = 1;
+  // const onRestartPressed = () => {
+  //   paused.value = true;
+  //   seek.value = 1;
 
-    setTimeout(() => {
-      paused.value = false;
-    }, 300);
-  };
+  //   setTimeout(() => {
+  //     paused.value = false;
+  //   }, 300);
+  // };
 
-  const src = rect(0, 0, size.width, size.height);
-  const dst = rect(0, 0, width, height);
-  const transform = fitbox('fill', src, dst, rotation);
+  // const src = rect(0, 0, size.width, size.height);
+  // const dst = rect(0, 0, width, height);
+  // const transform = fitbox('fill', src, dst, rotation);
 
   return (
     <>
       <Canvas style={StyleSheet.absoluteFill}>
-        <Image
+        {observations.map((obs) => {
+          return <Circle r={8} cx={obs.x} cy={obs.y} color={'red'} />;
+        })}
+        {/* <Image
           image={currentFrame}
           x={0}
           y={0}
@@ -63,9 +67,9 @@ export default function Details() {
           height={width * 3}
           fit="cover"
           transform={transform}
-        />
+        /> */}
       </Canvas>
-      <TouchableOpacity style={styles.button} onPress={onRestartPressed}>
+      <TouchableOpacity style={styles.button} onPress={() => {}}>
         <Text style={styles.buttonText}>Start Video</Text>
       </TouchableOpacity>
     </>
